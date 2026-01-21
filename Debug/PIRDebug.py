@@ -2,7 +2,7 @@ import time
 import RPi.GPIO as GPIO # RPI.GPIO is only accessable on Rasberry PI
 
 MotionSensor = 17
-Alarm = 4
+Alarm = 23
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(MotionSensor, GPIO.IN)

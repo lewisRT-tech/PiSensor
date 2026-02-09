@@ -1,24 +1,30 @@
 import time
-import RPi.GPIO as GPIO # RPI.GPIO is only accessable on Rasberry PI
+import RPi.GPIO as GPIO # RPI.GPIO is only accessible on Raspberry Pi
 
-MotionSensor = 17
-Alarm = 23
+#GPIO pins from pinout.xyz
+motionsensor = 4
+alarm = 17
+LED = 27
 
+#setup of pins
 GPIO.setmode(GPIO.BCM)
-GPIO.setup(MotionSensor, GPIO.IN)
-GPIO.setup(Alarm, GPIO.OUT)
+GPIO.setup(motionsensor, GPIO.IN)
+GPIO.setup(alarm, GPIO.OUT)
+GPIO.setup(LED, GPIO.OUT)
 
 
 print ("PIR Module Test (CTRL+C to exit)")
 time.sleep(3)
 try:
     while True:
-        if GPIO.input(MotionSensor) == 1:
+        if GPIO.input(motionsensor) == 1:
             print ("Motion detected")
-            GPIO.output(Alarm, GPIO.HIGH)
+            GPIO.output(alarm, GPIO.HIGH)
+            GPIO.output(LED, GPIO.HIGH)
             time.sleep(1)
-            GPIO.output(Alarm, GPIO.LOW)
+            GPIO.output(alarm, GPIO.LOW)
             time.sleep(3)
+            GPIO.output(LED, GPIO.LOW)
         else:
             print ("No motion detected")
             time.sleep(1)

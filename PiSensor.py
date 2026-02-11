@@ -3,22 +3,32 @@ import RPi.GPIO as GPIO # RPI.GPIO is only accessible on Raspberry Pi
 import smtplib
 import os
 import datetime
+from email.message import EmailMessage
 
 cleartime = 500
 
 def sendemail(username, userpassword):
-    send = smtplib.SMTP('smtp.gmail.com', 587)
-    # start TLS for security
-    send.starttls()
-    # Authentication
-    send.login(username, userpassword)
-    # message to be sent
-    message = "Motion detected at " + str(datetime.datetime.now())
-    # sending the mail
-    send.sendmail(username, username, message)
-    # terminating the session
-    send.quit()
 
+    msg = EmailMessage()
+    msg.set_content(f"Motion detected at {datetime.datetime.now()}")
+    msg["Subject"] = "Motion Alert"
+    msg["From"] = username
+    msg["To"] = username
+
+    try:
+        smtp = smtplib.SMTP('smtp.gmail.com', 587)
+        smtp.starttls()
+        smtp.login(username, userpassword)
+
+        print("Sending email...")
+        smtp.send_message(msg)
+
+        smtp.quit()
+        print("Email sent successfully")
+
+    except Exception as e:
+        print("Email failed:")
+        print(e)
 
 print ("Input name")
 user = input()

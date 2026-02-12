@@ -78,7 +78,7 @@ while True:
     GPIO.setup(LED, GPIO.OUT)
     GPIO.output(LED, GPIO.HIGH)
 
-    answer = input("Is the LED on? (y/yes, n/no): ")
+    answer = input("Is the LED on? (y/n): ")
     if answer == "y" or "yes":
         GPIO.output(LED, GPIO.LOW)
         break
